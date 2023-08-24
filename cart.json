@@ -1,0 +1,19 @@
+{
+    "cart": {
+        "products": [
+            {
+                "productId": 3,
+                "productName": "tree oil",
+                "price": 12,
+                "quantity": 4
+            },
+            {
+                "productId": 7,
+                "productName": "moisturizer",
+                "price": 15,
+                "quantity": 3
+            }
+        ],
+        "productCount": 0
+    }
+}
