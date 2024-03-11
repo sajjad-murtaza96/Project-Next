@@ -3,10 +3,11 @@ import { useContext, useMemo, useState } from 'react';
 import { addToCartContext } from '../store/add-to-cart-context';
 import React from 'react';
 import Image from 'next/image';
-import { GetStaticPropsContext } from 'next';
+import { GetServerSidePropsContext, GetStaticPropsContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { Rating, Button } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
+import { getOriginFromRequest } from '../utilities/fetchDomain';
 
 interface IStaticProps {
     loadedProductDetails: IProduct;
@@ -145,11 +146,11 @@ const ProductDetailPage: React.FC<IStaticProps> = (props: IStaticProps) => {
     )
 }
 
-export const getStaticProps = async (context: GetStaticPropsContext<ParsedUrlQuery>) => {
-    const { params } = context;
+export const getServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+    const { params, req } = context;
     const productId = params?.product?.at(-1)!;
 
-    const data: { products: IProduct[] } = await (await fetch('http://localhost:3000/api/home/fetchProducts')).json();
+    const data: { products: IProduct[] } = await (await fetch(`${getOriginFromRequest(req)}/api/home/fetchProducts`)).json();
 
     const product: IProduct | undefined = data.products.find((item) => item.id === +productId);
 
@@ -161,18 +162,6 @@ export const getStaticProps = async (context: GetStaticPropsContext<ParsedUrlQue
         props: {
             loadedProductDetails: product
         }
-    }
-}
-
-export const getStaticPaths = async () => {
-    const data: { products: IProduct[] } = await (await fetch('http://localhost:3000/api/home/fetchProducts')).json();
-    const pathWithParams = data.products.map((item) => {
-        return { params: { product: [String(item.id)] } }
-    });
-
-    return {
-        paths: pathWithParams,
-        fallback: true
     }
 }
 

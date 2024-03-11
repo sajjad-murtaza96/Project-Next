@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { IProduct } from '../utilities/product';
+import { GetServerSidePropsContext, GetStaticProps, PreviewData } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+import { getOriginFromRequest } from '../utilities/fetchDomain';
 
 const HomePage = (props: { products: IProduct[] }) => {
   return (
@@ -24,8 +27,9 @@ const HomePage = (props: { products: IProduct[] }) => {
   )
 }
 
-export const getStaticProps = async () => {
-  const data: { count: number, products: IProduct[] } = await (await fetch('http://localhost:3000/api/home/fetchProducts')).json();
+export const getServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+  const { req } = context
+  const data: { count: number, products: IProduct[] } = await (await fetch(`${getOriginFromRequest(req)}/api/home/fetchProducts`)).json();
   return {
     props: {
       products: data.products
