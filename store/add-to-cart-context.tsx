@@ -1,34 +1,40 @@
 import React, { createContext, useState } from 'react';
-import { IProductData } from '../dummy-data';
+import { IProduct } from '../utilities/product';
 
 interface CartContextType {
     productCount: number;
-    products: IProductData[];
-    addProductToCart: (products: IProductData[], count: number) => void;
+    products: IProduct[];
+    addProductToCart: (products: IProduct[], count: number) => void;
     removeProduct: (productId: number, productCount: number) => void;
+    updateTotalAmount: (subtotal: number) => void;
+    totalAmount: number;
 }
 
 interface ICartState {
     productCount: number;
-    products: IProductData[];
+    products: IProduct[];
+    totalAmount: number;
 }
 
 export const addToCartContext = createContext<CartContextType>({
     productCount: 0,
     products: [],
     addProductToCart: () => { },
-    removeProduct: () => { }
+    removeProduct: () => { },
+    updateTotalAmount: () => { },
+    totalAmount: 0
 });
 
 export const AddToCartProvider = ({ children }: any) => {
     const [cart, setCart] = useState<ICartState>({
         productCount: 0,
-        products: []
+        products: [],
+        totalAmount: 0
     });
 
-    const addProductToCart = (products: IProductData[], count: number) => {
-        console.log("products state", products);
+    const addProductToCart = (products: IProduct[], count: number) => {
         setCart({
+            ...cart,
             productCount: count,
             products: products
         })
@@ -37,12 +43,20 @@ export const AddToCartProvider = ({ children }: any) => {
     const removeProduct = (productId: number, productCount: number) => {
         const updatedCart = cart.products.filter((item) => item.id !== productId);
         setCart({
+            ...cart,
             productCount: productCount,
             products: updatedCart
         })
     }
 
-    return <addToCartContext.Provider value={{ productCount: cart.productCount, products: cart.products, addProductToCart, removeProduct }}>
+    const updateTotalAmount = (subtotal: number) => {
+        setCart({
+            ...cart,
+            totalAmount: cart.totalAmount + subtotal
+        })
+    }
+
+    return <addToCartContext.Provider value={{ productCount: cart.productCount, products: cart.products, addProductToCart, removeProduct, updateTotalAmount, totalAmount: cart.totalAmount }}>
         {children}
     </addToCartContext.Provider>
 }
