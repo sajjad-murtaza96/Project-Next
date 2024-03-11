@@ -2,20 +2,26 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import { addToCartContext } from '../../store/add-to-cart-context';
 import classes from './main-header.module.css';
+import { ShoppingBagIcon, BuildingStorefrontIcon } from '@heroicons/react/24/solid'
 
 const MainHeader = () => {
-  const { productCount, products } = useContext(addToCartContext);
+  const { productCount } = useContext(addToCartContext);
   return (
-    <header className={classes.header}>
-      <div className={classes.logo}>
-        <Link href='/'>My Store</Link>
-      </div>
-      <nav className={classes.navigation}>
-        <Link href='/cart'>
-          <div className={classes.cart}>
-            <span className={classes.count}>{productCount}</span>
-            <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path d="M13.5 21c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m-6 2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m16.5-16h-2.964l-3.642 15h-13.321l-4.073-13.003h19.522l.728-2.997h3.75v1zm-22.581 2.997l3.393 11.003h11.794l2.674-11.003h-17.861z" /></svg>          </div>
-        </Link>
+    <header className="bg-white w-full shadow-md border-b-2">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div className="flex lg:flex-1">
+          <Link href='/' className='className="-m-1.5 p-1.5"'>
+            <BuildingStorefrontIcon className="h-16 w-16 text-indigo-500 cursor-pointer" />
+          </Link>
+        </div>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <Link href='/cart' className="text-sm font-semibold leading-6 text-gray-900">
+            <div className={classes.cart}>
+              <span className={classes.count}>{productCount}</span>
+              <ShoppingBagIcon className="h-8 w-8 text-blue-500 cursor-pointer" />
+            </div>
+          </Link>
+        </div>
       </nav>
     </header>
   );
