@@ -3,7 +3,7 @@ import { useContext, useMemo, useState } from 'react';
 import { addToCartContext } from '../store/add-to-cart-context';
 import React from 'react';
 import Image from 'next/image';
-import { GetServerSidePropsContext, GetStaticPropsContext, PreviewData } from 'next';
+import { GetServerSidePropsContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { Rating, Button } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
@@ -114,14 +114,14 @@ const ProductDetailPage: React.FC<IStaticProps> = (props: IStaticProps) => {
                                 </span>
                             </p>
                             <div className="mt-6">
-                                <Rating className='mb-6' value={Math.round(loadedProductDetails.rating)} readonly />
+                                <Rating className='mb-6' value={Math.round(loadedProductDetails.rating)} readonly nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} />
                                 <form className="max-w-sm mx-auto">
                                     <label htmlFor="number-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Your Quantity</label>
                                     <input onChange={(e) => { handleOnChangeQuantity(e); }} value={quantity} type="number" id='quantity' name='quantity' min='1' max='10' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Your Quantity" required />
                                 </form>
                             </div>
                             {/* { Add To Cart button } */}
-                            <Button onClick={handleAddProductToCart} variant='text' disabled={quantity === 0} className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 active:bg-indigo-700 px-8 py-3 font-medium text-white text-base hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 capitalize">Add To Bag</Button>
+                            <Button onClick={handleAddProductToCart} variant='text' disabled={quantity === 0} className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 active:bg-indigo-700 px-8 py-3 font-medium text-white text-base hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 capitalize" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined}>Add To Bag</Button>
                         </div>
 
                         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
