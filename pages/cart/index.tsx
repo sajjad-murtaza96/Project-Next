@@ -2,7 +2,6 @@ import { useContext, useMemo } from "react";
 import { IProduct } from "../../utilities/product";
 import { addToCartContext } from "../../store/add-to-cart-context";
 import dynamic from 'next/dynamic';
-import Link from "next/link";
 import OrderSummary from "../../components/order-summary";
 import EmptyCart from "../../components/empty-cart";
 
