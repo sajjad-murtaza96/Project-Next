@@ -1,7 +1,9 @@
+import { useRouter } from "next/navigation";
 import { IOrderSummary } from "../utilities/product";
 import Link from 'next/link';
 
 const OrderSummary: React.FC<IOrderSummary> = ({ totalAmount, totalDiscount }) => {
+    const router = useRouter();
     return (
         <>
             <div className="bg-white rounded-lg shadow-md p-6">
@@ -22,7 +24,7 @@ const OrderSummary: React.FC<IOrderSummary> = ({ totalAmount, totalDiscount }) =
                     <span className="font-semibold">Order Total</span>
                     <span className="font-semibold">${Math.round(totalAmount + 1.99).toFixed(2)}</span>
                 </div>
-                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                <button onClick={() => router.push('/checkout')} className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                     <p>
                         or
